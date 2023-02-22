@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_2/model/category_model.dart';
 import 'package:flutter_bloc_2/model/models.dart';
 import '../screens/screens.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case SplashScreen.routeName:
+        return SplashScreen.route();
       case HomeScreen.routeName:
         return HomeScreen.route();
       case CartScreen.routeName:

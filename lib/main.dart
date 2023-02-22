@@ -23,7 +23,7 @@ class EcommerceBloc extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme(),
-        initialRoute: HomeScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );
