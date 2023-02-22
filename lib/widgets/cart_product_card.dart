@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/cart_bloc/cart_bloc.dart';
 import '../model/models.dart';
 
 class CartProductCard extends StatelessWidget {
@@ -39,19 +41,49 @@ class CartProductCard extends StatelessWidget {
             ),
             Row(
               children: [
-                IconButton(
-                  iconSize: 28,
-                  onPressed: () {},
-                  icon: const Icon(Icons.add_circle_outline),
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoading) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (state is CartLoaded) {
+                      return IconButton(
+                        iconSize: 28,
+                        onPressed: () {
+                          context
+                              .read<CartBloc>()
+                              .add(AddProductToCart(product));
+                        },
+                        icon: const Icon(Icons.add_circle_outline),
+                      );
+                    } else {
+                      return const Text("Something went wrong!");
+                    }
+                  },
                 ),
                 Text(
                   "1",
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                IconButton(
-                  iconSize: 28,
-                  onPressed: () {},
-                  icon: const Icon(Icons.remove_circle_outline),
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoading) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (state is CartLoaded) {
+                      return IconButton(
+                        iconSize: 28,
+                        onPressed: () {
+                          context
+                              .read<CartBloc>()
+                              .add(RemoveProductFromCart(product));
+                        },
+                        icon: const Icon(Icons.remove_circle_outline),
+                      );
+                    } else {
+                      return const Text("Something Went wrong!");
+                    }
+                  },
                 ),
               ],
             )

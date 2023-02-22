@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_2/screens/product/product_screen.dart';
+import '../blocs/cart_bloc/cart_bloc.dart';
 import '../model/models.dart';
 
 class ProductCard extends StatelessWidget {
@@ -59,14 +61,28 @@ class ProductCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          debugPrint("add");
+                      BlocBuilder<CartBloc, CartState>(
+                        builder: (context, state) {
+                          if (state is CartLoading) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (state is CartLoaded) {
+                            return IconButton(
+                              onPressed: () {
+                                debugPrint("add");
+                                context
+                                    .read<CartBloc>()
+                                    .add(AddProductToCart(products));
+                              },
+                              icon: const Icon(
+                                Icons.add_circle,
+                                color: Colors.white,
+                              ),
+                            );
+                          } else {
+                            return const Text("Something went wrong!");
+                          }
                         },
-                        icon: const Icon(
-                          Icons.add_circle,
-                          color: Colors.white,
-                        ),
                       ),
                       isWishList
                           ? IconButton(
