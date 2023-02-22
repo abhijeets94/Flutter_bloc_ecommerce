@@ -50,7 +50,7 @@ class CartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Add \$ 20.0 for FREE delivery",
+                  Cart().freeDelivery(Cart().deliveryFee(Cart().subTotal)),
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 ElevatedButton(
@@ -67,9 +67,15 @@ class CartScreen extends StatelessWidget {
               ],
             ),
           ),
-          CartProductCard(product: Product.products[0]),
-          CartProductCard(product: Product.products[1]),
-          CartProductCard(product: Product.products[2]),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 2.5,
+            child: ListView.builder(
+              itemCount: Cart.products.length,
+              itemBuilder: (context, index) {
+                return CartProductCard(product: Cart.products[index]);
+              },
+            ),
+          ),
           Spacer(),
           Divider(
             indent: 10,
@@ -89,7 +95,7 @@ class CartScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
-                  "\$ 8.97",
+                  "\$ ${Cart().subTotal.toStringAsFixed(2)}",
                   style: Theme.of(context).textTheme.headline6,
                 )
               ],
@@ -107,7 +113,7 @@ class CartScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
-                  "\$ 10.97",
+                  "\$ ${Cart().deliveryFee(Cart().subTotal)}",
                   style: Theme.of(context).textTheme.headline6,
                 )
               ],
@@ -142,7 +148,7 @@ class CartScreen extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                     Text(
-                      "\$ ${Product.products[0].price}",
+                      "\$ ${Cart().totalFee(Cart().subTotal, Cart().deliveryFee(Cart().subTotal))}",
                       style: Theme.of(context)
                           .textTheme
                           .headline6!
