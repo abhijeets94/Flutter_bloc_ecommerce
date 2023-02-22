@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_2/screens/screens.dart';
 import '../../blocs/cart_bloc/cart_bloc.dart';
 import '../../model/models.dart';
 import '../../widgets/widgets.dart';
@@ -67,7 +68,9 @@ class CartScreen extends StatelessWidget {
                         ElevatedButton(
                           style:
                               ElevatedButton.styleFrom(primary: Colors.black),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, HomeScreen.routeName);
+                          },
                           child: Text(
                             "Add More Items",
                             style: Theme.of(context)
@@ -82,10 +85,21 @@ class CartScreen extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 2.5,
                     child: ListView.builder(
-                      itemCount: state.cart.products.length,
+                      itemCount: state.cart
+                          .productQuantity(state.cart.products)
+                          .keys
+                          .length,
                       itemBuilder: (context, index) {
                         return CartProductCard(
-                            product: state.cart.products[index]);
+                          quantity: state.cart
+                              .productQuantity(state.cart.products)
+                              .values
+                              .elementAt(index),
+                          product: state.cart
+                              .productQuantity(state.cart.products)
+                              .keys
+                              .elementAt(index),
+                        );
                       },
                     ),
                   ),

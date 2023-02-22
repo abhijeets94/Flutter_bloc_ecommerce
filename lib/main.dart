@@ -4,9 +4,11 @@ import 'package:flutter_bloc_2/blocs/cart_bloc/cart_bloc.dart';
 import 'package:flutter_bloc_2/blocs/wishlist_bloc/wishlist_bloc.dart';
 import 'package:flutter_bloc_2/config/app_router.dart';
 import 'package:flutter_bloc_2/config/theme.dart';
+import 'bloc_observer.dart';
 import 'screens/screens.dart';
 
 void main() {
+  Bloc.observer = SimpleBlocObserver();
   runApp(const EcommerceBloc());
 }
 
